@@ -2,21 +2,23 @@ import json
 import os
 import pandas as pd
 from sklearn.preprocessing import PowerTransformer, MinMaxScaler, StandardScaler
+import pickle 
 
-def getting_values_to_drop(file_name = "columnsToDrop.json"):
+def getting_values_to_drop(file_name):
     file_path = f"artifacts/{file_name}"
-    try:
-        with open(file_path, 'r') as f:
-            columns_to_drop = json.load(f)
-        return columns_to_drop
-    except Exception as e:
-        print(e)
-        return e
+    with open(file_path, 'r') as f:
+        columns_to_drop = json.load(f)
+    return columns_to_drop
+        
     
 def fill_null_values(df):
-    for col in df.columns:
-        if col not in ["date_of_last_rech_6", "date_of_last_rech_7", "date_of_last_rech_8"]:
-            df[col].fillna(df[col].median(), inplace=True)
+    # Load the imputer from the file
+    with open('artifacts/fill_missing_values.pkl', 'rb') as f:
+        imputer = pickle.load(f)
+    new_arr = imputer.transform(df)
+    new_df = pd.DataFrame(new_arr, columns=df.columns)
+    return new_df
+
 
 def feature_engineering_df(df):
     df3 = pd.DataFrame()
@@ -42,31 +44,27 @@ def feature_engineering_df(df):
 
 def scaling_n_transform(df):
 
-    # droping the columns which failed in statistical test
-    col_to_drop = ['roam_og_mou_diff', 'roam_ic_mou_diff']
-    df = df.drop(col_to_drop, axis=1)
-
     # scaling
-    for col in df.columns:
-        if col != 'churn_probability':
-            sc = StandardScaler()
-            df[[col]] = sc.fit_transform(df[[col]])
+    with open('artifacts/scaling_data.pkl', 'rb') as f:
+        scaling = pickle.load(f)
+    scaled_df = pd.DataFrame(scaling.transform(df), columns=df.columns)
 
-    # transformation
-    for col in df.columns:
-        if col != 'churn_probability':
-            transform = PowerTransformer()
-            df[[col]] = transform.fit_transform(df[[col]])
+    #transforming
+    with open('artifacts/transforming_data.pkl', 'rb') as f:
+        transform = pickle.load(f)
+    transformed_df = pd.DataFrame(transform.transform(scaled_df), columns=df.columns)
 
-    return df
+    return transformed_df
 
 
 def preprocess_df(df):
-    values_to_drop = getting_values_to_drop()
+    values_to_drop = getting_values_to_drop("columnsToDrop.json")
     df1 = df.drop(values_to_drop, axis=1)
-    fill_null_values(df1)
     feature_eng_df = feature_engineering_df(df1)
-    scaled_df = scaling_n_transform(feature_eng_df)
+    values_to_drop = getting_values_to_drop("columnsToDrop_stats.json")
+    feature_eng_df = feature_eng_df.drop(values_to_drop, axis=1)
+    no_null_df = fill_null_values(feature_eng_df)
+    scaled_df = scaling_n_transform(no_null_df)
     return scaled_df
 
 
