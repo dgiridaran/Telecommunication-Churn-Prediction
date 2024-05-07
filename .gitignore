@@ -20,7 +20,7 @@ coverage.xml
 .hypothesis
 test.csv
 train.csv
-DSE_SEP2023_Batch1.ipynb
+# DSE_SEP2023_Batch1.ipynb
 .venv
 venv
 data_dictionary.csv
