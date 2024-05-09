@@ -47,4 +47,4 @@ and also containerized the app using Docker.
 ```bash
   streamlit run app.py
 ```
-
+**Use the test.csv file to test the model in streamlit app**
