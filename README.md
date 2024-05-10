@@ -14,9 +14,9 @@ In this competition, your goal is to build a machine learning model that is able
 Implemented a ML model with UI using Stremlit to access the model 
 and also containerized the app using Docker.
 
-**For Model Explanation and Insights view this ppt** -> https://docs.google.com/presentation/d/1vRTuQq9-FanOm-nICW_3tHrUzO9go-jxCQw2gCHE7kw/edit?usp=sharing
+**For Model Explanation and Insights view this ppt** -> [PPT Presentation](https://docs.google.com/presentation/d/1vRTuQq9-FanOm-nICW_3tHrUzO9go-jxCQw2gCHE7kw/edit?usp=sharing)
 
-**Notebook** -> https://github.com/dgiridaran/Telecommunication-Churn-Prediction/blob/main/DSE_SEP2023_Batch1.ipynb
+**Notebook** -> [jupyter notebook](https://github.com/dgiridaran/Telecommunication-Churn-Prediction/blob/main/DSE_SEP2023_Batch1.ipynb)
 
 ### To run app
 
