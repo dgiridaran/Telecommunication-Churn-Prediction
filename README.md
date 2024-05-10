@@ -16,6 +16,8 @@ and also containerized the app using Docker.
 
 **For Model Explanation and Insights view this ppt** -> https://docs.google.com/presentation/d/1vRTuQq9-FanOm-nICW_3tHrUzO9go-jxCQw2gCHE7kw/edit?usp=sharing
 
+**Notebook** -> https://github.com/dgiridaran/Telecommunication-Churn-Prediction/blob/main/DSE_SEP2023_Batch1.ipynb
+
 ### To run app
 
 
